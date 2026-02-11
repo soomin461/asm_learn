@@ -94,14 +94,17 @@ Asm_Add_Sqr:
 	@ r0 -> 3
 	@ r1 -> 5
 
-	push	{r1, r4, lr}
+	@ push	{r4-r5, lr} -> 함수간 호출은 8의 배수가 되어야함 dummy 추가
+	push	{r4-r6, lr}
+	mov		R5, r1
 	bl		Sqr		@ r0: = a * a
 	mov		r4, r0
+	mov		R0, R5
 	pop		{r1}
 	mov		r0, r1	@ r0 := b
 	bl		Sqr		@ r0 := a * a
 	add		r0, r0, r4
-	pop		{r4, pc}
+	pop		{r4-r6, pc}
 
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
